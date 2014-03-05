@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.labelGeneration = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // labelGeneration
@@ -39,6 +41,10 @@
             this.labelGeneration.Size = new System.Drawing.Size(116, 13);
             this.labelGeneration.TabIndex = 0;
             this.labelGeneration.Text = "Generation:           ###";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Controller
             // 
@@ -57,6 +63,7 @@
         #endregion
 
         private System.Windows.Forms.Label labelGeneration;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

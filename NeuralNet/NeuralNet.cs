@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Brain.Properties;
 
 namespace Brain
@@ -121,9 +122,10 @@ namespace Brain
 	        for (int i=0; i<HiddenLayers + 1; ++i)
 	        {		
 		        if ( i > 0 )
-                {
-                    inputs = outputs;
-                }
+		        {
+                    inputs.Clear();
+		            outputs.ForEach(inputs.Add);
+		        }
 
 		        outputs.Clear();
 		

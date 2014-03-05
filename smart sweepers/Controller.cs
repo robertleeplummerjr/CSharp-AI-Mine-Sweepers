@@ -35,23 +35,23 @@ namespace smart_sweepers
         {
             new Point(-1, -1),
             new Point(-1, 1),
-            new Point(1, -1),
-            new Point(1, 1),
-
             new Point(-0.5, 1),
             new Point(-0.5, -1),
+
             new Point(0.5, -1),
-            new Point(0.5, 0.5),
+            new Point(1, -1),
+            new Point(1, 1),
+            new Point(0.5, 1),
             
-            new Point(0.5, 1),                             
             new Point(-0.5, -0.5),
             new Point(0.5, -0.5),
+                                        
             new Point(-0.5, 0.5),
-
             new Point(-0.25, 0.5),
             new Point(-0.25, 1.75),
             new Point(0.25, 1.75),
-            new Point(0.25, 0.5)
+            new Point(0.25, 0.5),
+            new Point(0.5, 0.5)
         };
 
         Point[] Mine = new Point[4]
@@ -68,13 +68,12 @@ namespace smart_sweepers
         public Controller()
         {
             FastRender = false;
-            InitializeComponent();
             Whiteboard = CreateGraphics();
 
             //let's create the mine sweepers
             for (int i = 0; i < Sweeper.Length; ++i)
             {
-                Sweepers.Add(new MineSweeper(Whiteboard, 400,400));
+                Sweepers.Add(new MineSweeper(Whiteboard, 400, 400));
             }
 
             //get the total number of weights used in the sweepers
@@ -96,7 +95,7 @@ namespace smart_sweepers
             }
 
             //initialize mines in random positions within the application window
-            for (var i=0; i<Mines.Count; ++i)
+            for (var i=0; i<Properties.Settings.Default.Mines; ++i)
             {
                 Mines.Add(new Vector(Utilities.Math.Rand() * Width, Utilities.Math.Rand() * Height));
             }
@@ -112,6 +111,9 @@ namespace smart_sweepers
             {
                 MineVerticesBuffer.Add(mine);
             }
+
+            InitializeComponent();
+            timer1.Enabled = true;
         }
 
         private void PlotStats()
@@ -249,6 +251,7 @@ namespace smart_sweepers
                 }
             }
 
+            Render();
             return true;
         }
 
@@ -257,6 +260,11 @@ namespace smart_sweepers
         private void ControllerLoad(object sender, EventArgs e)
         {
             
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Update();
         }
     }
 }

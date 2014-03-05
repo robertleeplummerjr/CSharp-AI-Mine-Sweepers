@@ -6,3 +6,11 @@ c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\Gen
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\Genes\bin\Debug\Utilities.pdb
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\Genes\obj\Debug\Genes.dll
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\Genes\obj\Debug\Genes.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Genes\bin\Debug\Genes.dll.config
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Genes\bin\Debug\Genes.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Genes\bin\Debug\Genes.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Genes\bin\Debug\Utilities.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Genes\bin\Debug\Utilities.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Genes\obj\Debug\Genes.csprojResolveAssemblyReference.cache
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Genes\obj\Debug\Genes.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Genes\obj\Debug\Genes.pdb

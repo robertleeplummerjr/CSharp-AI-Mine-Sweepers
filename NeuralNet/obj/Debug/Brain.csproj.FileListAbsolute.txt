@@ -6,3 +6,11 @@ c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\Neu
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\NeuralNet\obj\Debug\Brain.csprojResolveAssemblyReference.cache
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\NeuralNet\obj\Debug\NeuralNet.dll
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\NeuralNet\obj\Debug\NeuralNet.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\NeuralNet\bin\Debug\NeuralNet.dll.config
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\NeuralNet\bin\Debug\NeuralNet.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\NeuralNet\bin\Debug\NeuralNet.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\NeuralNet\bin\Debug\Utilities.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\NeuralNet\bin\Debug\Utilities.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\NeuralNet\obj\Debug\Brain.csprojResolveAssemblyReference.cache
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\NeuralNet\obj\Debug\NeuralNet.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\NeuralNet\obj\Debug\NeuralNet.pdb

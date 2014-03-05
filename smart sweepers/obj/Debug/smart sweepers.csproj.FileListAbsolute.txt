@@ -13,3 +13,18 @@ c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\sma
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\smart sweepers\bin\Debug\Utilities.pdb
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\smart sweepers\obj\Debug\smart sweepers.exe
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\smart sweepers\obj\Debug\smart sweepers.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\bin\Debug\smart sweepers.exe.config
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\obj\Debug\smart sweepers.exe
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\obj\Debug\smart sweepers.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\bin\Debug\smart sweepers.exe
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\bin\Debug\smart sweepers.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\bin\Debug\Genes.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\bin\Debug\NeuralNet.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\bin\Debug\Utilities.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\bin\Debug\Genes.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\bin\Debug\NeuralNet.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\bin\Debug\Utilities.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\obj\Debug\smart sweepers.csprojResolveAssemblyReference.cache
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\obj\Debug\smart_sweepers.Controller.resources
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\obj\Debug\smart_sweepers.Properties.Resources.resources
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\smart sweepers\obj\Debug\smart sweepers.csproj.GenerateResource.Cache

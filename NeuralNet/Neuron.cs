@@ -10,6 +10,8 @@ namespace Brain
 
         public Neuron(int inputs)
         {
+            Inputs = inputs;
+
             //we need an additional weight for the bias hence the +1
             for (int i = 0; i < inputs + 1; ++i)
             {

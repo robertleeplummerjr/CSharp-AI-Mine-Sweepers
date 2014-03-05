@@ -38,12 +38,12 @@ namespace smart_sweepers.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public int Ouputs {
+        public int Outputs {
             get {
-                return ((int)(this["Ouputs"]));
+                return ((int)(this["Outputs"]));
             }
             set {
-                this["Ouputs"] = value;
+                this["Outputs"] = value;
             }
         }
         
@@ -116,6 +116,18 @@ namespace smart_sweepers.Properties {
             }
             set {
                 this["Elite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public int Mines {
+            get {
+                return ((int)(this["Mines"]));
+            }
+            set {
+                this["Mines"] = value;
             }
         }
     }

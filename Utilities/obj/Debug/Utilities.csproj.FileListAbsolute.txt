@@ -3,3 +3,8 @@ c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\Uti
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\Utilities\obj\Debug\Utilities.csprojResolveAssemblyReference.cache
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\Utilities\obj\Debug\Utilities.dll
 c:\users\robert.plummer\documents\visual studio 2013\Projects\smart sweepers\Utilities\obj\Debug\Utilities.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Utilities\bin\Debug\Utilities.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Utilities\bin\Debug\Utilities.pdb
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Utilities\obj\Debug\Utilities.csprojResolveAssemblyReference.cache
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Utilities\obj\Debug\Utilities.dll
+C:\Users\robert.plummer\Documents\GitHub\CSharp-AI-Mine-Sweepers\Utilities\obj\Debug\Utilities.pdb

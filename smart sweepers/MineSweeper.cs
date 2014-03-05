@@ -11,8 +11,7 @@ namespace smart_sweepers
     internal class MineSweeper
     {
         private NeuralNet Brain = new NeuralNet();
-        private Vector _Position;
-        private Vector LookAt;
+        private Vector LookAt = new Vector(0,0);
         private double Rotation;
         private Double Speed;
 
@@ -38,7 +37,7 @@ namespace smart_sweepers
             _ClosestMine = 0;
 
 
-            _Position = new Vector(Utilities.Math.Rand() * width, Utilities.Math.Rand() * height);
+            Position = new Vector(Utilities.Math.Rand() * width, Utilities.Math.Rand() * height);
             Width = width;
             Height = height;
         }
@@ -79,7 +78,7 @@ namespace smart_sweepers
 
             //make sure there were no errors in calculating the 
             //output
-            if (output.Count < Properties.Settings.Default.Ouputs) 
+            if (output.Count < Properties.Settings.Default.Outputs) 
             {
                 return false;
             }
@@ -87,6 +86,11 @@ namespace smart_sweepers
             //assign the outputs to the sweepers left & right tracks
             LTrack = output[0];
             RTrack = output[1];
+
+            if (double.IsNaN(LTrack) || double.IsNaN(RTrack))
+            {
+                throw new Exception("Tracks are messed up");
+            }
 
             //calculate steering forces
             double rotForce = LTrack - RTrack;
@@ -188,7 +192,7 @@ namespace smart_sweepers
             Height = height;
         }
 
-        public Vector Position { get; set; }
+        public Vector Position;
 
         public void IncrementFitness()
         {
@@ -210,7 +214,7 @@ namespace smart_sweepers
         private Rectangle Visual;
         public void Draw(Pen pen)
         {
-            Visual = new Rectangle((int)_Position.X, (int)_Position.Y, 6, 12);
+            Visual = new Rectangle((int)Position.X, (int)Position.Y, 6, 12);
             using (var matrix = new System.Drawing.Drawing2D.Matrix())
             {
                 matrix.RotateAt((float)Rotation, new PointF(Visual.Left + (Visual.Width / 2), Visual.Top + (Visual.Height / 2)));
@@ -222,7 +226,14 @@ namespace smart_sweepers
 
         internal void Reset()
         {
-            throw new NotImplementedException();
+            //reset the sweepers positions
+            Position = new Vector(Utilities.Math.Rand() * Width, Utilities.Math.Rand() * Height);
+	
+            //and the fitness
+            Fitness = 0;
+
+            //and the rotation
+            Rotation = Utilities.Math.Rand()*System.Math.PI * 2;
         }
     }
 }
