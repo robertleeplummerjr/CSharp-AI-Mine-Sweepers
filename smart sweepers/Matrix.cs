@@ -81,14 +81,16 @@ namespace smart_sweepers
 
         public void Translate(double x, double y)
         {
-            Multiply(new Matrix(1, 0, 0,
+            Multiply(new Matrix(
+                1, 0, 0,
                 0,1,0,
                 x,y,1));
         }
 
         public void Scale(double scaleX, double scaleY)
         {
-            Multiply(new Matrix(scaleX,0,0,
+            Multiply(new Matrix(
+                scaleX,0,0,
                 0,scaleY,0,
                 0,0,1));
         }
@@ -98,7 +100,8 @@ namespace smart_sweepers
             var sin = Math.Sin(rot);
             var cos = Math.Cos(rot);
 
-            Multiply(new Matrix(cos, rot, 0,
+            Multiply(new Matrix(
+                cos, rot, 0,
                 -sin,cos,0,
                 0,0,1));
         }

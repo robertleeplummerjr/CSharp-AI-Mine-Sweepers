@@ -4,18 +4,39 @@ namespace Utilities
 {
     public static class Math
     {
-        //returns a random integer between x and y
-        public static int Rand(int x, int y)
-        {
-            var result = (new Random()).Next(x,y);
-            return result;
-        }
-
+        private static Random rand = new Random(DateTime.Now.Millisecond);
         //returns a random float between zero and 1
         public static double Rand()
         {
-            var rand = (new Random()).NextDouble() * (1 - 0) + 0;
-            return rand;
+            return Rand(1);
+        }
+
+        //returns a random integer between x and y
+        public static int Rand(int x, int y)
+        {
+            var result = rand.Next(x,y);
+            return result;
+        }
+
+        //returns a random float between zero and x
+        public static double Rand(int x)
+        {
+            var result = rand.Next(x);
+            return result;
+        }
+
+        //returns a random float between zero and x
+        public static double Rand(double x)
+        {
+            var result = rand.Next((int)x);
+            return result;
+        }
+
+        public static double Rand360()
+        {
+            var pi2 = System.Math.PI * 2;
+            var result = rand.NextDouble() * pi2;
+            return result;
         }
 
         public static double RandomClamped()

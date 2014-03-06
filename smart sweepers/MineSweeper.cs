@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms.VisualStyles;
 using Brain;
 using Utilities;
 using System.Windows;
 using System.Drawing;
+using Genes;
+using System.Drawing.Drawing2D;
 
 namespace smart_sweepers
 {
@@ -19,27 +22,40 @@ namespace smart_sweepers
 
         private double Scale;
 
-        private int _ClosestMine;
+        private Mine _ClosestMine;
 
         private int Width;
         private int Height;
+        private bool Elite;
+        
+        public Pen Color;
+        public Genome Genes;
 
         private Graphics Whiteboard;
+        private System.Drawing.Drawing2D.Matrix DrawingMatrix;
 
-        public MineSweeper(Graphics whiteboard, int width, int height)
+        public MineSweeper(ref Graphics whiteboard, int width, int height, bool elite)
         {
             Whiteboard = whiteboard;
-            Rotation = Utilities.Math.Rand()*(System.Math.PI*2);
+            Rotation = Utilities.Math.Rand360();
             LTrack = 0.16;
             RTrack = 0.16;
-            Fitness = 0;
             Scale = Properties.Settings.Default.SweeperScale;
-            _ClosestMine = 0;
 
-
-            Position = new Vector(Utilities.Math.Rand() * width, Utilities.Math.Rand() * height);
+            var x = Utilities.Math.Rand(width);
+            var y = Utilities.Math.Rand(height);
+            Position = new Vector(x, y);
             Width = width;
             Height = height;
+            Elite = elite;
+            Color = elite ? Pens.Red : Pens.Black;
+            Visual = new Rectangle((int)x, (int)y, 6, 12);
+        }
+
+        public void InsertGenes(Genome genes)
+        {
+            Genes = genes;
+            Brain.PutWeights(genes.Weights);
         }
 
         //	First we take sensor readings and feed these into the sweepers brain.
@@ -52,13 +68,13 @@ namespace smart_sweepers
         //	We receive two outputs from the brain.. lTrack & rTrack.
         //	So given a force for each track we calculate the resultant rotation 
         //	and acceleration and apply to current velocity vector.
-        public bool Update(List<Vector> mines)
+        public bool Update(ref List<Mine> mines)
         {
             //this will store all the inputs for the NN
             var inputs = new List<double>();	
 
             //get vector to closest mine
-            var closestMine = ClosestMine(mines);
+            var closestMine = ClosestMine(ref mines);
   
             //normalise it
             closestMine.Normalize();
@@ -138,23 +154,23 @@ namespace smart_sweepers
         }
 
         //	returns the vector from the sweeper to the closest mine
-        public Vector ClosestMine(List<Vector> mines)
+        public Vector ClosestMine(ref List<Mine> mines)
         {
             double closestSoFar = 99999;
-            var closest = new Vector(0,0);
+            Vector closest = null;
 
 	        //cycle through mines to find closest
-	        for (int i=0; i<mines.Count; i++)
-	        {
-	            double distance = (mines[i] - Position).Length();
+            foreach (var mine in mines)
+            {
+	            double distance = (mine.Position - Position).Length();
 
                 if (distance < closestSoFar)
 		        {
                     closestSoFar = distance;
 			
-			        closest = Position - mines[i];
+			        closest = Position - mine.Position;
 
-                    _ClosestMine = i;
+                    _ClosestMine = mine;
 		        }
 	        }
 
@@ -164,46 +180,41 @@ namespace smart_sweepers
 
         //  this function checks for collision with its closest mine (calculated
         //  earlier and stored in _ClosestMine)
-        public int CheckForMine(List<Vector> mines, double size)
+        public Mine CheckForMine(ref List<Mine> mines, double size)
         {
-            var distance = Position - mines[_ClosestMine];
+            var distance = Position - _ClosestMine.Position;
 
             if (distance.Length() < (size + 5))
             {
                 return _ClosestMine;
             }
 
-            return -1;
+            return null;
         }
 
         //	Resets the sweepers position, fitness and rotation
-        public void Reset(int width, int height)
+        public void Reset()
         {
             //reset the sweepers positions
-            Position = new Vector(Utilities.Math.Rand() * width, Utilities.Math.Rand() * height);
+            Position = new Vector(Utilities.Math.Rand(Width), Utilities.Math.Rand(Height));
 	
             //and the fitness
-            Fitness = 0;
+            Genes.Fitness = 0;
 
             //and the rotation
-            Rotation = Utilities.Math.Rand() * (System.Math.PI * 2);
-
-            Width = width;
-            Height = height;
+            Rotation = Utilities.Math.Rand360();
         }
 
         public Vector Position;
 
         public void IncrementFitness()
         {
-            Fitness++;
+            Genes.Fitness++;
         }
 
-        public double Fitness { get; set; }
-
-        public void PutWeights(List<double> w)
+        public double Fitness()
         {
-            Brain.PutWeights(w);
+            return Genes.Fitness;
         }
 
         public int GetNumberOfWeights()
@@ -212,28 +223,17 @@ namespace smart_sweepers
         }
 
         private Rectangle Visual;
-        public void Draw(Pen pen)
+        public void Draw()
         {
-            Visual = new Rectangle((int)Position.X, (int)Position.Y, 6, 12);
-            using (var matrix = new System.Drawing.Drawing2D.Matrix())
-            {
-                matrix.RotateAt((float)Rotation, new PointF(Visual.Left + (Visual.Width / 2), Visual.Top + (Visual.Height / 2)));
-                Whiteboard.Transform = matrix;
-                Whiteboard.DrawRectangle(pen, Visual);
-                Whiteboard.ResetTransform();
-            }
-        }
-
-        internal void Reset()
-        {
-            //reset the sweepers positions
-            Position = new Vector(Utilities.Math.Rand() * Width, Utilities.Math.Rand() * Height);
-	
-            //and the fitness
-            Fitness = 0;
-
-            //and the rotation
-            Rotation = Utilities.Math.Rand()*System.Math.PI * 2;
+            /*System.Drawing.Drawing2D.Matrix transform = System.Drawing.Drawing2D.Matrix.CreateTranslation(new Vector3(-pivot, 0.0f)) *
+            System.Drawing.Drawing2D.Matrix.CreateRotationZ(angle) *
+            System.Drawing.Drawing2D.Matrix.CreateTranslation(new Vector3(position, 0.0f));*/
+            DrawingMatrix = new System.Drawing.Drawing2D.Matrix();
+            Visual.X = (int)Position.X;
+            Visual.Y = (int)Position.Y;
+            DrawingMatrix.Rotate((float)Rotation, MatrixOrder.Append);
+            Whiteboard.Transform = DrawingMatrix;
+            Whiteboard.DrawRectangle(Color, Visual);
         }
     }
 }

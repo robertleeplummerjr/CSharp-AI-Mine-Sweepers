@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -12,7 +13,7 @@ namespace smart_sweepers
     {
         private List<Genome> Population = new List<Genome>();
         private List<MineSweeper> Sweepers = new List<MineSweeper>();
-        List<Vector> Mines = new List<Vector>();
+        List<Mine> Mines = new List<Mine>();
         private int Weights;
         
         //vertex buffer for the sweeper shape's vertices
@@ -68,12 +69,16 @@ namespace smart_sweepers
         public Controller()
         {
             FastRender = false;
+            Width = ActiveForm.Width;
+            Height = ActiveForm.Height;
             Whiteboard = CreateGraphics();
+            Whiteboard.CompositingQuality = CompositingQuality.HighQuality;
+            Whiteboard.SmoothingMode = SmoothingMode.HighQuality;
 
             //let's create the mine sweepers
             for (int i = 0; i < Sweeper.Length; ++i)
             {
-                Sweepers.Add(new MineSweeper(Whiteboard, 400, 400));
+                Sweepers.Add(new MineSweeper(ref Whiteboard, Width, Height, i == Properties.Settings.Default.Elite));
             }
 
             //get the total number of weights used in the sweepers
@@ -85,19 +90,19 @@ namespace smart_sweepers
                 Properties.Settings.Default.MutationRate,
                 Properties.Settings.Default.CrossoverRate,
                 Weights);
-
-            //Get the weights from the GA and insert into the sweepers brains
+            //Get the weights from the Genetic Algorythm and insert into the sweepers brains
             Population = GA.GetChromos();
 
-            for (var i = 0; i < Sweepers.Count; i++)
+            for (var i = 0; i < Population.Count; i++)
             {
-                Sweepers[i].PutWeights(Population[i].Weights);
+                Sweepers[i].InsertGenes(Population[i]);
             }
 
             //initialize mines in random positions within the application window
-            for (var i=0; i<Properties.Settings.Default.Mines; ++i)
+            for (var i = 0; i < Properties.Settings.Default.Mines; ++i)
             {
-                Mines.Add(new Vector(Utilities.Math.Rand() * Width, Utilities.Math.Rand() * Height));
+                var mine = new Mine(ref Whiteboard, Width, Height);
+                Mines.Add(mine);
             }
 	
 
@@ -132,32 +137,25 @@ namespace smart_sweepers
 	        //do not render if running at accelerated speed
 	        if (!FastRender)
 	        {
-	            Whiteboard.Clear(TransparencyKey);
-        
                 //render the mines
-		        for (int i=0; i<Mines.Count; ++i)
-		        {
-			        //grab the vertices for the mine shape
-			        WorldTransform(ref MineVerticesBuffer, Mines[i]);
-			        //draw the mines
-		            var mine = new Mine(Whiteboard, (int)Mine[0].X, (int)Mine[0].Y);
-                    mine.Draw(Pens.Green);
-		        }
+                foreach (var mine in Mines)
+                {
+                    //grab the vertices for the mine shape
+                    WorldTransform(ref MineVerticesBuffer, mine.Position);
+                    //draw the mines
+                    mine.Draw();
+                }
        		
                 //we want the fittest displayed in red
 		        //render the sweepers
-		        for (var i=0; i<Sweepers.Count; i++)
+		        foreach (var sweeper in Sweepers)
 		        {
                     //grab the sweeper vertices
                     //transform the vertex buffer
-                    Sweepers[i].WorldTransform(ref SweeperVerticesBuffer);
-
-		            if (i == Properties.Settings.Default.Elite)
-		                Sweepers[i].Draw(Pens.Red);
-		            else
-		                Sweepers[i].Draw(Pens.Black);
+                    sweeper.WorldTransform(ref SweeperVerticesBuffer);
+                    sweeper.Draw();
                 }
-
+                //Invalidate();
 	        }
             else
             {
@@ -184,7 +182,7 @@ namespace smart_sweepers
         //	This is the main workhorse. The entire simulation is controlled from here.
         //
         //	The comments should explain what is going on adequately.
-        public bool Update()
+        public new bool Update()
         {
             //run the sweepers through CParams::iNumTicks amount of cycles. During
             //this loop each sweepers NN is constantly updated with the appropriate
@@ -193,10 +191,10 @@ namespace smart_sweepers
             //updated appropriately,
             if (Ticks++ < Properties.Settings.Default.Ticks)
             {
-                for (int i=0; i<Sweepers.Count; ++i)
+                foreach (var sweeper in Sweepers)
                 {
                     //update the NN and position
-                    if (!Sweepers[i].Update(Mines))
+                    if (!sweeper.Update(ref Mines))
                     {
                         //error in processing the neural net
                         MessageBox.Show("Wrong amount of NN inputs!", "Error");
@@ -205,22 +203,19 @@ namespace smart_sweepers
                     }
 				
                     //see if it's found a mine
-                    int GrabHit = Sweepers[i].CheckForMine(Mines, Properties.Settings.Default.MinScale);
+                    var foundMine = sweeper.CheckForMine(ref Mines, Properties.Settings.Default.MinScale);
 
-                    if (GrabHit >= 0)
+                    if (foundMine != null)
                     {
                         //we have discovered a mine so increase fitness
-                        Sweepers[i].IncrementFitness();
+                        sweeper.IncrementFitness();
 
                         //mine found so replace the mine with another at a random 
                         //position
-                        Mines[GrabHit] = new Vector(Utilities.Math.Rand() * Width,
-                        Utilities.Math.Rand() * Height);
+                        foundMine.Reposition();
+
+
                     }
-
-                    //update the chromos fitness score
-                    Population[i].Fitness = Sweepers[i].Fitness;
-
                 }
             }
 
@@ -246,7 +241,7 @@ namespace smart_sweepers
                 //and reset their positions etc
                 for (int i=0; i<Sweepers.Count; ++i)
                 {
-                    Sweepers[i].PutWeights(Population[i].Weights);
+                    Sweepers[i].Genes = Population[i];
                     Sweepers[i].Reset();
                 }
             }
